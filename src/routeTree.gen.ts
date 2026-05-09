@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkflowsRouteImport } from './routes/workflows'
 import { Route as ReasoningRouteImport } from './routes/reasoning'
+import { Route as PolicyRouteImport } from './routes/policy'
 import { Route as OverridesRouteImport } from './routes/overrides'
 import { Route as HealthRouteImport } from './routes/health'
 import { Route as GovernanceRouteImport } from './routes/governance'
@@ -25,6 +26,11 @@ const WorkflowsRoute = WorkflowsRouteImport.update({
 const ReasoningRoute = ReasoningRouteImport.update({
   id: '/reasoning',
   path: '/reasoning',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PolicyRoute = PolicyRouteImport.update({
+  id: '/policy',
+  path: '/policy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OverridesRoute = OverridesRouteImport.update({
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/governance': typeof GovernanceRoute
   '/health': typeof HealthRoute
   '/overrides': typeof OverridesRoute
+  '/policy': typeof PolicyRoute
   '/reasoning': typeof ReasoningRoute
   '/workflows': typeof WorkflowsRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/governance': typeof GovernanceRoute
   '/health': typeof HealthRoute
   '/overrides': typeof OverridesRoute
+  '/policy': typeof PolicyRoute
   '/reasoning': typeof ReasoningRoute
   '/workflows': typeof WorkflowsRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/governance': typeof GovernanceRoute
   '/health': typeof HealthRoute
   '/overrides': typeof OverridesRoute
+  '/policy': typeof PolicyRoute
   '/reasoning': typeof ReasoningRoute
   '/workflows': typeof WorkflowsRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/governance'
     | '/health'
     | '/overrides'
+    | '/policy'
     | '/reasoning'
     | '/workflows'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/governance'
     | '/health'
     | '/overrides'
+    | '/policy'
     | '/reasoning'
     | '/workflows'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/governance'
     | '/health'
     | '/overrides'
+    | '/policy'
     | '/reasoning'
     | '/workflows'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   GovernanceRoute: typeof GovernanceRoute
   HealthRoute: typeof HealthRoute
   OverridesRoute: typeof OverridesRoute
+  PolicyRoute: typeof PolicyRoute
   ReasoningRoute: typeof ReasoningRoute
   WorkflowsRoute: typeof WorkflowsRoute
 }
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/reasoning'
       fullPath: '/reasoning'
       preLoaderRoute: typeof ReasoningRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/policy': {
+      id: '/policy'
+      path: '/policy'
+      fullPath: '/policy'
+      preLoaderRoute: typeof PolicyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/overrides': {
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   GovernanceRoute: GovernanceRoute,
   HealthRoute: HealthRoute,
   OverridesRoute: OverridesRoute,
+  PolicyRoute: PolicyRoute,
   ReasoningRoute: ReasoningRoute,
   WorkflowsRoute: WorkflowsRoute,
 }
