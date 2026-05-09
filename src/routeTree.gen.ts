@@ -13,6 +13,7 @@ import { Route as WorkflowsRouteImport } from './routes/workflows'
 import { Route as ReasoningRouteImport } from './routes/reasoning'
 import { Route as OverridesRouteImport } from './routes/overrides'
 import { Route as HealthRouteImport } from './routes/health'
+import { Route as GovernanceRouteImport } from './routes/governance'
 import { Route as AgentsRouteImport } from './routes/agents'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -36,6 +37,11 @@ const HealthRoute = HealthRouteImport.update({
   path: '/health',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GovernanceRoute = GovernanceRouteImport.update({
+  id: '/governance',
+  path: '/governance',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AgentsRoute = AgentsRouteImport.update({
   id: '/agents',
   path: '/agents',
@@ -50,6 +56,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/governance': typeof GovernanceRoute
   '/health': typeof HealthRoute
   '/overrides': typeof OverridesRoute
   '/reasoning': typeof ReasoningRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/governance': typeof GovernanceRoute
   '/health': typeof HealthRoute
   '/overrides': typeof OverridesRoute
   '/reasoning': typeof ReasoningRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/agents': typeof AgentsRoute
+  '/governance': typeof GovernanceRoute
   '/health': typeof HealthRoute
   '/overrides': typeof OverridesRoute
   '/reasoning': typeof ReasoningRoute
@@ -77,16 +86,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/agents'
+    | '/governance'
     | '/health'
     | '/overrides'
     | '/reasoning'
     | '/workflows'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/agents' | '/health' | '/overrides' | '/reasoning' | '/workflows'
+  to:
+    | '/'
+    | '/agents'
+    | '/governance'
+    | '/health'
+    | '/overrides'
+    | '/reasoning'
+    | '/workflows'
   id:
     | '__root__'
     | '/'
     | '/agents'
+    | '/governance'
     | '/health'
     | '/overrides'
     | '/reasoning'
@@ -96,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AgentsRoute: typeof AgentsRoute
+  GovernanceRoute: typeof GovernanceRoute
   HealthRoute: typeof HealthRoute
   OverridesRoute: typeof OverridesRoute
   ReasoningRoute: typeof ReasoningRoute
@@ -132,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HealthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/governance': {
+      id: '/governance'
+      path: '/governance'
+      fullPath: '/governance'
+      preLoaderRoute: typeof GovernanceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/agents': {
       id: '/agents'
       path: '/agents'
@@ -152,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AgentsRoute: AgentsRoute,
+  GovernanceRoute: GovernanceRoute,
   HealthRoute: HealthRoute,
   OverridesRoute: OverridesRoute,
   ReasoningRoute: ReasoningRoute,
