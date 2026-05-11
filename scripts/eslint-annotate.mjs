@@ -27,8 +27,7 @@ const cwd = process.cwd();
 let totalErrors = 0;
 let totalWarnings = 0;
 
-const escape = (s) =>
-  String(s).replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A");
+const escape = (s) => String(s).replace(/%/g, "%25").replace(/\r/g, "%0D").replace(/\n/g, "%0A");
 
 for (const file of report) {
   const path = relative(cwd, resolve(file.filePath));
@@ -46,6 +45,4 @@ for (const file of report) {
   }
 }
 
-process.stdout.write(
-  `ESLint annotations: ${totalErrors} error(s), ${totalWarnings} warning(s)\n`,
-);
+process.stdout.write(`ESLint annotations: ${totalErrors} error(s), ${totalWarnings} warning(s)\n`);

@@ -37,4 +37,12 @@ export default tseslint.config(
     },
   },
   eslintPluginPrettier,
+  {
+    // Formatting issues should not fail CI — Prettier runs as a dedicated
+    // step (`prettier --check .`) and reports separately. Keep TS / runtime
+    // rules as errors.
+    rules: {
+      "prettier/prettier": "warn",
+    },
+  },
 );

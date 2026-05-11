@@ -54,6 +54,23 @@ jobs:
           set -o pipefail
           bun run scripts/validate-tailwind.ts 2>&1 | tee reports/tailwind-validate.log
 
+      # Prettier — non-blocking formatting check. Writes a list of files that
+      # would be reformatted to reports/ for the artifact bundle, and emits a
+      # GitHub warning annotation when violations exist. Never fails the job.
+      - name: Prettier (format check)
+        id: prettier
+        run: |
+          mkdir -p reports
+          set +e
+          bunx prettier --check . > reports/prettier-report.txt 2>&1
+          status=$?
+          bunx prettier --list-different . > reports/prettier-files.txt 2>&1 || true
+          if [ $status -ne 0 ]; then
+            count=$(wc -l < reports/prettier-files.txt | tr -d ' ')
+            echo "::warning title=Prettier::${count} file(s) need formatting. Run 'bun run format' locally. See ci-reports artifact."
+          fi
+          exit 0
+
       # ESLint — emit JSON report + GitHub annotations, never short-circuit
       # the job so later steps and artifact uploads still run.
       - name: ESLint

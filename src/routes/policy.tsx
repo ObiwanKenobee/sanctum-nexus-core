@@ -6,7 +6,11 @@ export const Route = createFileRoute("/policy")({
   head: () => ({
     meta: [
       { title: "Policy Enforcement · Atlas Sanctum" },
-      { name: "description", content: "Policy-as-code execution: ethical rules, constitutional constraints, and automated compliance auditing." },
+      {
+        name: "description",
+        content:
+          "Policy-as-code execution: ethical rules, constitutional constraints, and automated compliance auditing.",
+      },
     ],
   }),
   component: PolicyPage,
@@ -32,9 +36,27 @@ ELSE
   permit()`;
 
 const violations = [
-  { id: "VIO-441", rule: "ER-12", agent: "AGT-4421", msg: "advisory mode enforced — human absent", lvl: "warning" as const },
-  { id: "VIO-440", rule: "AL-08", agent: "AGT-3318", msg: "alignment drift, agent suspended", lvl: "critical" as const },
-  { id: "VIO-438", rule: "GE-21", agent: "AGT-7733", msg: "geofence breach blocked at edge", lvl: "warning" as const },
+  {
+    id: "VIO-441",
+    rule: "ER-12",
+    agent: "AGT-4421",
+    msg: "advisory mode enforced — human absent",
+    lvl: "warning" as const,
+  },
+  {
+    id: "VIO-440",
+    rule: "AL-08",
+    agent: "AGT-3318",
+    msg: "alignment drift, agent suspended",
+    lvl: "critical" as const,
+  },
+  {
+    id: "VIO-438",
+    rule: "GE-21",
+    agent: "AGT-7733",
+    msg: "geofence breach blocked at edge",
+    lvl: "warning" as const,
+  },
 ];
 
 function PolicyPage() {
@@ -51,7 +73,9 @@ function PolicyPage() {
           <div className="flex items-center justify-between border-b border-border p-4">
             <div className="flex items-center gap-2">
               <Scale className="h-4 w-4 text-primary" />
-              <h2 className="text-sm font-semibold uppercase tracking-[0.18em]">Rule · constitutional/ER-12</h2>
+              <h2 className="text-sm font-semibold uppercase tracking-[0.18em]">
+                Rule · constitutional/ER-12
+              </h2>
             </div>
             <StatusChip status="nominal" label="active" pulse />
           </div>
@@ -65,7 +89,9 @@ function PolicyPage() {
             {violations.map((v) => (
               <li key={v.id} className="rounded-md border border-border bg-background/40 p-3">
                 <div className="flex items-center justify-between font-mono text-[11px]">
-                  <span className="text-primary">{v.id} · {v.rule}</span>
+                  <span className="text-primary">
+                    {v.id} · {v.rule}
+                  </span>
                   <StatusChip status={v.lvl} label={v.lvl} />
                 </div>
                 <p className="mt-1 text-sm">{v.msg}</p>
