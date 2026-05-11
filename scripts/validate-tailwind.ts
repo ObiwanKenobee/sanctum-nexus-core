@@ -9,7 +9,7 @@
 import { readFile } from "node:fs/promises";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-import { compile } from "tailwindcss";
+import { compile } from "@tailwindcss/node";
 
 const projectRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const entry = resolve(projectRoot, "src/styles.css");
@@ -17,15 +17,14 @@ const entry = resolve(projectRoot, "src/styles.css");
 async function main() {
   const css = await readFile(entry, "utf8");
 
+  // @tailwindcss/node resolves npm imports (e.g. `@import "tailwindcss"`)
+  // and runs the same pipeline as the Vite plugin, so any CSS / Tailwind
+  // syntax error surfaces here with a precise message.
   const compiler = await compile(css, {
     base: dirname(entry),
-    loadStylesheet: async (id, base) => {
-      const path = resolve(base, id);
-      return { path, base: dirname(path), content: await readFile(path, "utf8") };
-    },
+    onDependency: () => {},
   });
 
-  // Force the candidate scan + CSS generation pipeline to actually run.
   compiler.build([]);
 
   console.log(`✓ Tailwind/PostCSS config OK (${entry})`);
