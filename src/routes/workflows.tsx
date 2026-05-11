@@ -6,7 +6,11 @@ export const Route = createFileRoute("/workflows")({
   head: () => ({
     meta: [
       { title: "Workflow Engine · Atlas Sanctum" },
-      { name: "description", content: "Visual orchestration of multi-agent workflows: chaining, triggers, and cross-domain coordination." },
+      {
+        name: "description",
+        content:
+          "Visual orchestration of multi-agent workflows: chaining, triggers, and cross-domain coordination.",
+      },
     ],
   }),
   component: WorkflowsPage,
@@ -17,7 +21,12 @@ const steps = [
   { id: "emergency", label: "Emergency AI Agent", sub: "AGT-9921 · 240ms", status: "done" },
   { id: "health", label: "Health Risk Agent", sub: "AGT-2104 · 318ms", status: "running" },
   { id: "alert", label: "Community Alert Agent", sub: "AGT-7733 · queued", status: "pending" },
-  { id: "treasury", label: "Treasury Allocation", sub: "AGT-4421 · awaits human", status: "pending" },
+  {
+    id: "treasury",
+    label: "Treasury Allocation",
+    sub: "AGT-4421 · awaits human",
+    status: "pending",
+  },
   { id: "human", label: "Human Approval Layer", sub: "OPS-LEAD · escalated", status: "pending" },
 ];
 

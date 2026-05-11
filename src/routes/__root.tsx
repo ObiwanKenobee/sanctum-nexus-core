@@ -85,8 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:title", content: "Atlas Sanctum — AI Agent Command Center" },
       {
         property: "og:description",
-        content:
-          "The constitutional operating system for autonomous regenerative infrastructure.",
+        content: "The constitutional operating system for autonomous regenerative infrastructure.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -140,7 +139,9 @@ function RootComponent() {
                 <div className="hidden items-center gap-2 rounded-md border border-border bg-card px-2.5 py-1.5 text-xs text-muted-foreground md:flex">
                   <Search className="h-3.5 w-3.5" />
                   <span className="font-mono">search agents, traces, policies…</span>
-                  <kbd className="ml-2 rounded border border-border px-1.5 py-0.5 text-[10px]">⌘K</kbd>
+                  <kbd className="ml-2 rounded border border-border px-1.5 py-0.5 text-[10px]">
+                    ⌘K
+                  </kbd>
                 </div>
                 <button className="relative flex h-9 w-9 items-center justify-center rounded-md border border-border bg-card text-muted-foreground transition-colors hover:text-foreground">
                   <Bell className="h-4 w-4" />

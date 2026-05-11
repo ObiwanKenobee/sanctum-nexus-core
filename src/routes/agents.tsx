@@ -6,26 +6,119 @@ export const Route = createFileRoute("/agents")({
   head: () => ({
     meta: [
       { title: "Agent Registry · Atlas Sanctum" },
-      { name: "description", content: "Searchable directory of all autonomous AI agents — identity, capabilities, trust scores, and runtime status." },
+      {
+        name: "description",
+        content:
+          "Searchable directory of all autonomous AI agents — identity, capabilities, trust scores, and runtime status.",
+      },
     ],
   }),
   component: AgentsPage,
 });
 
 const agents = [
-  { id: "AGT-2104", name: "Outbreak Predictor α", cat: "Health", region: "AFR-EAST", trust: 96, ver: "v3.2.1", status: "nominal" as const },
-  { id: "AGT-4421", name: "Treasury Disbursement", cat: "Finance", region: "EU-WEST", trust: 71, ver: "v2.0.4", status: "warning" as const },
-  { id: "AGT-3318", name: "Monsoon Drift Model", cat: "Climate", region: "ASIA-SOUTH", trust: 89, ver: "v8.4.0", status: "warning" as const },
-  { id: "AGT-9921", name: "Flood Response Coord.", cat: "Emergency", region: "ASIA-SE", trust: 94, ver: "v1.7.2", status: "info" as const },
-  { id: "AGT-1147", name: "Grid Load Balancer", cat: "Infrastructure", region: "AMER-N", trust: 99, ver: "v5.1.0", status: "nominal" as const },
-  { id: "AGT-0612", name: "Constitution Auditor", cat: "Governance", region: "GLOBAL", trust: 100, ver: "v1.0.9", status: "nominal" as const },
-  { id: "AGT-2280", name: "Synthetic City Sim", cat: "Simulation", region: "GLOBAL", trust: 88, ver: "v4.0.0", status: "nominal" as const },
-  { id: "AGT-7733", name: "Community Alert Mesh", cat: "Emergency", region: "AFR-WEST", trust: 92, ver: "v2.3.1", status: "nominal" as const },
-  { id: "AGT-5512", name: "Vaccine Logistics", cat: "Health", region: "AMER-S", trust: 90, ver: "v3.0.2", status: "nominal" as const },
-  { id: "AGT-6601", name: "Carbon Market Maker", cat: "Finance", region: "GLOBAL", trust: 84, ver: "v1.4.5", status: "info" as const },
+  {
+    id: "AGT-2104",
+    name: "Outbreak Predictor α",
+    cat: "Health",
+    region: "AFR-EAST",
+    trust: 96,
+    ver: "v3.2.1",
+    status: "nominal" as const,
+  },
+  {
+    id: "AGT-4421",
+    name: "Treasury Disbursement",
+    cat: "Finance",
+    region: "EU-WEST",
+    trust: 71,
+    ver: "v2.0.4",
+    status: "warning" as const,
+  },
+  {
+    id: "AGT-3318",
+    name: "Monsoon Drift Model",
+    cat: "Climate",
+    region: "ASIA-SOUTH",
+    trust: 89,
+    ver: "v8.4.0",
+    status: "warning" as const,
+  },
+  {
+    id: "AGT-9921",
+    name: "Flood Response Coord.",
+    cat: "Emergency",
+    region: "ASIA-SE",
+    trust: 94,
+    ver: "v1.7.2",
+    status: "info" as const,
+  },
+  {
+    id: "AGT-1147",
+    name: "Grid Load Balancer",
+    cat: "Infrastructure",
+    region: "AMER-N",
+    trust: 99,
+    ver: "v5.1.0",
+    status: "nominal" as const,
+  },
+  {
+    id: "AGT-0612",
+    name: "Constitution Auditor",
+    cat: "Governance",
+    region: "GLOBAL",
+    trust: 100,
+    ver: "v1.0.9",
+    status: "nominal" as const,
+  },
+  {
+    id: "AGT-2280",
+    name: "Synthetic City Sim",
+    cat: "Simulation",
+    region: "GLOBAL",
+    trust: 88,
+    ver: "v4.0.0",
+    status: "nominal" as const,
+  },
+  {
+    id: "AGT-7733",
+    name: "Community Alert Mesh",
+    cat: "Emergency",
+    region: "AFR-WEST",
+    trust: 92,
+    ver: "v2.3.1",
+    status: "nominal" as const,
+  },
+  {
+    id: "AGT-5512",
+    name: "Vaccine Logistics",
+    cat: "Health",
+    region: "AMER-S",
+    trust: 90,
+    ver: "v3.0.2",
+    status: "nominal" as const,
+  },
+  {
+    id: "AGT-6601",
+    name: "Carbon Market Maker",
+    cat: "Finance",
+    region: "GLOBAL",
+    trust: 84,
+    ver: "v1.4.5",
+    status: "info" as const,
+  },
 ];
 
-const categories = ["All", "Health", "Climate", "Finance", "Emergency", "Infrastructure", "Governance", "Simulation"];
+const categories = [
+  "All",
+  "Health",
+  "Climate",
+  "Finance",
+  "Emergency",
+  "Infrastructure",
+  "Governance",
+  "Simulation",
+];
 
 function AgentsPage() {
   return (
@@ -94,7 +187,12 @@ function AgentsPage() {
                     <div className="h-1 w-16 overflow-hidden rounded-full bg-muted">
                       <div
                         className={
-                          "h-full " + (a.trust >= 90 ? "bg-success" : a.trust >= 75 ? "bg-accent" : "bg-destructive")
+                          "h-full " +
+                          (a.trust >= 90
+                            ? "bg-success"
+                            : a.trust >= 75
+                              ? "bg-accent"
+                              : "bg-destructive")
                         }
                         style={{ width: `${a.trust}%` }}
                       />

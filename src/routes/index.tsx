@@ -59,7 +59,13 @@ const incidents = [
 const domains = [
   { name: "Public Health", agents: 2104, load: 72, trend: "+3.4%", status: "nominal" as const },
   { name: "Climate Systems", agents: 3318, load: 64, trend: "+1.1%", status: "nominal" as const },
-  { name: "Treasury & Finance", agents: 1247, load: 88, trend: "+9.2%", status: "warning" as const },
+  {
+    name: "Treasury & Finance",
+    agents: 1247,
+    load: 88,
+    trend: "+9.2%",
+    status: "warning" as const,
+  },
   { name: "Emergency Response", agents: 982, load: 41, trend: "−2.0%", status: "nominal" as const },
   { name: "Infrastructure", agents: 2890, load: 57, trend: "+0.6%", status: "nominal" as const },
   { name: "Governance Audit", agents: 612, load: 33, trend: "+0.0%", status: "info" as const },
@@ -84,10 +90,20 @@ function MissionControl() {
 
       <section className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
         <MetricCard label="Active Agents" value="12,842" hint="+184 last hour" accent="primary" />
-        <MetricCard label="Critical Alerts" value="7" hint="2 awaiting human" accent="destructive" />
+        <MetricCard
+          label="Critical Alerts"
+          value="7"
+          hint="2 awaiting human"
+          accent="destructive"
+        />
         <MetricCard label="Human Overrides" value="3" hint="Active interventions" accent="accent" />
         <MetricCard label="Autonomous Tasks" value="48,229" hint="Last 24h" accent="primary" />
-        <MetricCard label="Alignment Score" value="98.2%" hint="−0.3 vs baseline" accent="success" />
+        <MetricCard
+          label="Alignment Score"
+          value="98.2%"
+          hint="−0.3 vs baseline"
+          accent="success"
+        />
         <MetricCard label="Sim Accuracy" value="94.7%" hint="Across 38 models" accent="success" />
       </section>
 
@@ -119,11 +135,7 @@ function MissionControl() {
                     <div
                       className={
                         "h-full rounded-full " +
-                        (d.load > 80
-                          ? "bg-destructive"
-                          : d.load > 60
-                            ? "bg-accent"
-                            : "bg-primary")
+                        (d.load > 80 ? "bg-destructive" : d.load > 60 ? "bg-accent" : "bg-primary")
                       }
                       style={{ width: `${d.load}%` }}
                     />
@@ -171,10 +183,30 @@ function MissionControl() {
 
       <section className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {[
-          { icon: Users, title: "Agent Registry", to: "/agents", desc: "12,842 agents online · 7 categories" },
-          { icon: Workflow, title: "Workflow Engine", to: "/workflows", desc: "184 chains running · 12 awaiting trigger" },
-          { icon: Brain, title: "Reasoning Traces", to: "/reasoning", desc: "Inspect explainable decision lineage" },
-          { icon: Cpu, title: "Simulation Lab", to: "/simulation", desc: "Stress test before production deploy" },
+          {
+            icon: Users,
+            title: "Agent Registry",
+            to: "/agents",
+            desc: "12,842 agents online · 7 categories",
+          },
+          {
+            icon: Workflow,
+            title: "Workflow Engine",
+            to: "/workflows",
+            desc: "184 chains running · 12 awaiting trigger",
+          },
+          {
+            icon: Brain,
+            title: "Reasoning Traces",
+            to: "/reasoning",
+            desc: "Inspect explainable decision lineage",
+          },
+          {
+            icon: Cpu,
+            title: "Simulation Lab",
+            to: "/simulation",
+            desc: "Stress test before production deploy",
+          },
         ].map((c) => (
           <Link
             key={c.to}
@@ -195,16 +227,42 @@ function MissionControl() {
         <div className="flex items-center gap-2">
           <Activity className="h-4 w-4 text-primary" />
           <h2 className="text-sm font-semibold uppercase tracking-[0.18em]">Agent Activity Feed</h2>
-          <span className="ml-auto font-mono text-[10px] text-muted-foreground">STREAMING · WS</span>
+          <span className="ml-auto font-mono text-[10px] text-muted-foreground">
+            STREAMING · WS
+          </span>
         </div>
         <ol className="mt-3 space-y-2 font-mono text-xs">
           {[
-            { t: "14:08:21", lvl: "INFO", txt: "agent[health-2104] dispatched outbreak prediction → triage-router" },
-            { t: "14:08:19", lvl: "WARN", txt: "agent[treasury-4421] requires consensus (3/5) for $182,400 disbursement" },
-            { t: "14:08:17", lvl: "INFO", txt: "workflow[flood-response-v3] completed in 1.84s — 12 agents" },
-            { t: "14:08:14", lvl: "OK  ", txt: "alignment audit passed for governance-cluster (98.4%)" },
-            { t: "14:08:09", lvl: "WARN", txt: "recursive loop guard tripped on simulation-agent[sim-228]" },
-            { t: "14:08:02", lvl: "INFO", txt: "human override accepted — emergency-9921 paused by OPS-LEAD" },
+            {
+              t: "14:08:21",
+              lvl: "INFO",
+              txt: "agent[health-2104] dispatched outbreak prediction → triage-router",
+            },
+            {
+              t: "14:08:19",
+              lvl: "WARN",
+              txt: "agent[treasury-4421] requires consensus (3/5) for $182,400 disbursement",
+            },
+            {
+              t: "14:08:17",
+              lvl: "INFO",
+              txt: "workflow[flood-response-v3] completed in 1.84s — 12 agents",
+            },
+            {
+              t: "14:08:14",
+              lvl: "OK  ",
+              txt: "alignment audit passed for governance-cluster (98.4%)",
+            },
+            {
+              t: "14:08:09",
+              lvl: "WARN",
+              txt: "recursive loop guard tripped on simulation-agent[sim-228]",
+            },
+            {
+              t: "14:08:02",
+              lvl: "INFO",
+              txt: "human override accepted — emergency-9921 paused by OPS-LEAD",
+            },
           ].map((row, i) => (
             <li key={i} className="flex gap-3 text-muted-foreground">
               <span className="text-primary/70">{row.t}</span>

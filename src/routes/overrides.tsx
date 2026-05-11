@@ -6,17 +6,45 @@ export const Route = createFileRoute("/overrides")({
   head: () => ({
     meta: [
       { title: "Human Override · Atlas Sanctum" },
-      { name: "description", content: "Pause agents, revoke permissions, kill-switch controls, and approval queues for high-risk autonomous actions." },
+      {
+        name: "description",
+        content:
+          "Pause agents, revoke permissions, kill-switch controls, and approval queues for high-risk autonomous actions.",
+      },
     ],
   }),
   component: OverridesPage,
 });
 
 const queue = [
-  { id: "APR-9921", title: "Disburse $182,400 emergency aid → Kibera Zone 4", cat: "Financial", risk: "critical" as const, agent: "AGT-4421" },
-  { id: "APR-9920", title: "Shut down regional grid sector G-7 for 12min failover", cat: "Infrastructure", risk: "warning" as const, agent: "AGT-1147" },
-  { id: "APR-9918", title: "Issue population-level outbreak advisory (1.2M reach)", cat: "Population", risk: "warning" as const, agent: "AGT-2104" },
-  { id: "APR-9915", title: "Update constitutional rule CR-44 (sandbox proposal)", cat: "Policy", risk: "info" as const, agent: "AGT-0612" },
+  {
+    id: "APR-9921",
+    title: "Disburse $182,400 emergency aid → Kibera Zone 4",
+    cat: "Financial",
+    risk: "critical" as const,
+    agent: "AGT-4421",
+  },
+  {
+    id: "APR-9920",
+    title: "Shut down regional grid sector G-7 for 12min failover",
+    cat: "Infrastructure",
+    risk: "warning" as const,
+    agent: "AGT-1147",
+  },
+  {
+    id: "APR-9918",
+    title: "Issue population-level outbreak advisory (1.2M reach)",
+    cat: "Population",
+    risk: "warning" as const,
+    agent: "AGT-2104",
+  },
+  {
+    id: "APR-9915",
+    title: "Update constitutional rule CR-44 (sandbox proposal)",
+    cat: "Policy",
+    risk: "info" as const,
+    agent: "AGT-0612",
+  },
 ];
 
 function OverridesPage() {
@@ -44,7 +72,10 @@ function OverridesPage() {
           </div>
           <ul className="mt-4 space-y-3">
             {queue.map((q) => (
-              <li key={q.id} className="rounded-md border border-border bg-background/40 p-4 transition-colors hover:border-primary/40">
+              <li
+                key={q.id}
+                className="rounded-md border border-border bg-background/40 p-4 transition-colors hover:border-primary/40"
+              >
                 <div className="flex items-start justify-between gap-3">
                   <div className="flex-1">
                     <div className="flex items-center gap-2 text-[11px] font-mono">

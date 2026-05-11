@@ -64,20 +64,26 @@ export function AppSidebar() {
             <Activity className="h-4 w-4 text-primary relative" />
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">Atlas Sanctum</span>
+            <span className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
+              Atlas Sanctum
+            </span>
             <span className="text-sm font-semibold text-foreground glow-text">Command Center</span>
           </div>
         </div>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[10px] uppercase tracking-[0.18em]">Operations</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[10px] uppercase tracking-[0.18em]">
+            Operations
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>{operations.map(renderItem)}</SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[10px] uppercase tracking-[0.18em]">Safety & Governance</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-[10px] uppercase tracking-[0.18em]">
+            Safety & Governance
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>{safety.map(renderItem)}</SidebarMenu>
           </SidebarGroupContent>

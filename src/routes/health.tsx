@@ -6,7 +6,11 @@ export const Route = createFileRoute("/health")({
   head: () => ({
     meta: [
       { title: "Agent Health · Atlas Sanctum" },
-      { name: "description", content: "Real-time telemetry across uptime, latency, hallucination risk, and alignment confidence for the AI fleet." },
+      {
+        name: "description",
+        content:
+          "Real-time telemetry across uptime, latency, hallucination risk, and alignment confidence for the AI fleet.",
+      },
     ],
   }),
   component: HealthPage,
@@ -21,7 +25,13 @@ function Sparkline({ values, color }: { values: number[]; color: string }) {
     .join(" ");
   return (
     <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="h-12 w-full">
-      <polyline points={points} fill="none" stroke={color} strokeWidth="2" vectorEffect="non-scaling-stroke" />
+      <polyline
+        points={points}
+        fill="none"
+        stroke={color}
+        strokeWidth="2"
+        vectorEffect="non-scaling-stroke"
+      />
     </svg>
   );
 }
@@ -46,15 +56,37 @@ function HealthPage() {
       <section className="grid grid-cols-2 gap-4 md:grid-cols-4">
         <MetricCard label="Fleet Uptime" value="99.987%" hint="30d rolling" accent="success" />
         <MetricCard label="P99 Latency" value="284ms" hint="−12ms vs 7d" accent="primary" />
-        <MetricCard label="Hallucination Risk" value="0.42%" hint="2 agents flagged" accent="accent" />
-        <MetricCard label="Alignment Conf." value="98.2%" hint="−0.3 vs baseline" accent="success" />
+        <MetricCard
+          label="Hallucination Risk"
+          value="0.42%"
+          hint="2 agents flagged"
+          accent="accent"
+        />
+        <MetricCard
+          label="Alignment Conf."
+          value="98.2%"
+          hint="−0.3 vs baseline"
+          accent="success"
+        />
       </section>
 
       <section className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         {[
-          { title: "Latency (p99)", color: "oklch(0.78 0.15 195)", data: [40, 45, 38, 60, 52, 70, 55, 48, 50, 44, 42, 46] },
-          { title: "Hallucination Rate", color: "oklch(0.78 0.16 75)", data: [12, 10, 14, 11, 16, 22, 18, 14, 12, 11, 14, 13] },
-          { title: "Alignment Confidence", color: "oklch(0.72 0.18 155)", data: [98, 98.4, 98.6, 98.2, 98.1, 97.9, 98.0, 98.2, 98.3, 98.4, 98.2, 98.2] },
+          {
+            title: "Latency (p99)",
+            color: "oklch(0.78 0.15 195)",
+            data: [40, 45, 38, 60, 52, 70, 55, 48, 50, 44, 42, 46],
+          },
+          {
+            title: "Hallucination Rate",
+            color: "oklch(0.78 0.16 75)",
+            data: [12, 10, 14, 11, 16, 22, 18, 14, 12, 11, 14, 13],
+          },
+          {
+            title: "Alignment Confidence",
+            color: "oklch(0.72 0.18 155)",
+            data: [98, 98.4, 98.6, 98.2, 98.1, 97.9, 98.0, 98.2, 98.3, 98.4, 98.2, 98.2],
+          },
         ].map((c) => (
           <div key={c.title} className="panel p-5">
             <div className="flex items-center justify-between">
@@ -84,7 +116,11 @@ function HealthPage() {
               <span
                 className={
                   "col-span-1 " +
-                  (i.lvl === "WARN" ? "text-accent" : i.lvl === "OK" ? "text-success" : "text-muted-foreground")
+                  (i.lvl === "WARN"
+                    ? "text-accent"
+                    : i.lvl === "OK"
+                      ? "text-success"
+                      : "text-muted-foreground")
                 }
               >
                 [{i.lvl}]
