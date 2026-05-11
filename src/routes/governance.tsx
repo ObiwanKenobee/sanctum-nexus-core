@@ -110,7 +110,10 @@ function GovernancePage() {
                   className="flex items-center justify-between rounded-md border border-border bg-background/40 px-3 py-2"
                 >
                   <span>{n}</span>
-                  <StatusChip status={st as any} label={s as string} />
+                  <StatusChip
+                    status={st as "nominal" | "warning" | "critical" | "offline" | "info"}
+                    label={s as string}
+                  />
                 </div>
               ))}
             </div>
