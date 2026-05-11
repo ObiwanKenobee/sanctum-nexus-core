@@ -8,14 +8,63 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        mode: [development, production]
+    name: Build (${{ matrix.mode }})
     steps:
       - uses: actions/checkout@v4
+
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: latest
+
+      # Cache Bun's global install store, keyed on the lockfile.
+      - name: Cache Bun dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.bun/install/cache
+            node_modules
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lockb', 'bun.lock', 'package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-bun-
+
+      # Cache Vite's transform cache to speed up repeated builds.
+      - name: Cache Vite build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            node_modules/.vite
+            .vite
+          key: ${{ runner.os }}-vite-${{ matrix.mode }}-${{ hashFiles('vite.config.ts', 'package.json', 'src/**/*.{ts,tsx,css}') }}
+          restore-keys: |
+            ${{ runner.os }}-vite-${{ matrix.mode }}-
+            ${{ runner.os }}-vite-
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
-      - name: Build (development)
-        run: bunx vite build --mode development
-      - name: Build (production)
-        run: bunx vite build --mode production
+
+      # Validate Tailwind v4 + PostCSS configuration up front so CSS syntax
+      # errors fail loudly before the full Vite build runs.
+      - name: Validate Tailwind / PostCSS config
+        run: bun run scripts/validate-tailwind.ts
+
+      - name: ESLint
+        run: bun run lint
+
+      - name: TypeScript type-check
+        run: bunx tsc --noEmit
+
+      - name: Vite build (${{ matrix.mode }})
+        run: bunx vite build --mode ${{ matrix.mode }}
+
+      - name: Upload build output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vite-dist-${{ matrix.mode }}
+          path: dist
+          if-no-files-found: ignore
+          retention-days: 7
