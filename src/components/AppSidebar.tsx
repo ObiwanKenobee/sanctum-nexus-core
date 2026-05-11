@@ -44,7 +44,11 @@ export function AppSidebar() {
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
   const isActive = (p: string) => currentPath === p;
 
-  const renderItem = (item: { title: string; url: string; icon: any }) => (
+  const renderItem = (item: {
+    title: string;
+    url: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }) => (
     <SidebarMenuItem key={item.url}>
       <SidebarMenuButton asChild isActive={isActive(item.url)}>
         <Link to={item.url} className="flex items-center gap-3">
