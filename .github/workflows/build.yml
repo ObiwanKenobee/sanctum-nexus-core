@@ -49,16 +49,48 @@ jobs:
       # Validate Tailwind v4 + PostCSS configuration up front so CSS syntax
       # errors fail loudly before the full Vite build runs.
       - name: Validate Tailwind / PostCSS config
-        run: bun run scripts/validate-tailwind.ts
+        run: |
+          mkdir -p reports
+          set -o pipefail
+          bun run scripts/validate-tailwind.ts 2>&1 | tee reports/tailwind-validate.log
 
+      # ESLint — emit JSON report + GitHub annotations, never short-circuit
+      # the job so later steps and artifact uploads still run.
       - name: ESLint
-        run: bun run lint
+        id: eslint
+        run: |
+          mkdir -p reports
+          set +e
+          bunx eslint . \
+            --format json --output-file reports/eslint-report.json \
+            > reports/eslint.log 2>&1
+          status=$?
+          # Mirror a human-readable report for the artifact bundle.
+          bunx eslint . --format stylish > reports/eslint-report.txt 2>&1 || true
+          # Convert JSON report → GitHub annotations (file/line/col).
+          node scripts/eslint-annotate.mjs reports/eslint-report.json || true
+          exit $status
 
+      # tsc — register a problem matcher so TSxxxx errors annotate inline,
+      # tee output for the artifact, and preserve the exit code.
       - name: TypeScript type-check
-        run: bunx tsc --noEmit
+        id: tsc
+        run: |
+          mkdir -p reports
+          echo "::add-matcher::.github/matchers/tsc.json"
+          set -o pipefail
+          bunx tsc --noEmit --pretty false 2>&1 | tee reports/tsc-report.txt
+          status=${PIPESTATUS[0]}
+          echo "::remove-matcher owner=tsc::"
+          exit $status
 
       - name: Vite build (${{ matrix.mode }})
-        run: bunx vite build --mode ${{ matrix.mode }}
+        id: vite
+        run: |
+          mkdir -p reports
+          set -o pipefail
+          bunx vite build --mode ${{ matrix.mode }} 2>&1 \
+            | tee reports/vite-build-${{ matrix.mode }}.log
 
       - name: Upload build output
         if: always()
@@ -68,3 +100,12 @@ jobs:
           path: dist
           if-no-files-found: ignore
           retention-days: 7
+
+      - name: Upload lint / typecheck / build reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-reports-${{ matrix.mode }}
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 14
